@@ -6,8 +6,8 @@ A simple Mie scattering program to compute the exact solution.
 
 ### Step 1: Import libraries 
 
-from libs.MieLib import MieScatt
-from libs.Materials import Materials
+`from libs.MieLib import MieScatt`   
+`from libs.Materials import Materials`  
 
 ### Step 2: Generate parameters
 

@@ -10,9 +10,6 @@ import numpy as np
 import scipy.special as sps
 from termcolor import colored
 
-def test():
-    print('test')
-
 class SpecialFunctions(object):
 
     def psi(self, n, x):

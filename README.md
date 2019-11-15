@@ -55,13 +55,13 @@ Creation of the object, copy the parameters and run a scan in wavelengths. It wi
 Finally the data is ready for plot. We use the `matplotlib library to execute this step.
 
 `fig, ax = plt.subplots(figsize = (9, 5.5))`  
-`ax.plot(wavelength_list*1E9, mie.Qext, label = '$Q_{ext}$')`  
-`ax.plot(wavelength_list*1E9, mie.Qscat, label = '$Q_{scat}$', linestyle = ':')`  
-`ax.plot(wavelength_list*1E9, mie.Qabs, label = '$Q_{abs}$')`  
+`ax.plot(mie.cross_sections['Qabs'], label = '$Q_{abs}$')`
+`ax.plot(mie.cross_sections['Qext'], label = '$Q_{ext}$', linestyle = ':')`
+`ax.plot(mie.cross_sections['Qscat'], label = '$Q_{scat}$')`
 `ax.set_xlabel('$\lambda$ (nm)', fontsize = 16)`  
 `ax.set_ylabel('', fontsize = 16)`  
 `ax.tick_params(axis='both', which='major', labelsize=13)`  
 `ax.tick_params(axis='both', which='minor', labelsize=13)`  
 `plt.legend(fontsize = 13)`  
 `plt.title('Cross Sections', fontsize = 14)`  
-`plt.xlim(1000, 2000);`  
+`plt.xlim(1000E-9, 2000E-9);`  

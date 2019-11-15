@@ -9,6 +9,7 @@
 import numpy as np
 import scipy.special as sps
 from termcolor import colored
+import pandas as pd
 
 class SpecialFunctions(object):
 
@@ -46,17 +47,6 @@ class MieScatt(SpecialFunctions):
         print('* M.N.Polyanskiy, \"Refractive index database,\" https: // refractiveindex.info. Accessed on 2019-10-04.')
         print('Version', self.__version__, self.__codename__)
         print(colored(50*'__', 'blue'))
-
-    def load_Si_particle(self):
-        self.a = 0.23E-6;
-        self.m = 1;
-        self.mt = 3.5 + 0.0j;
-        self.N_multipoles = 10;
-        print("Loaded Parameters for Si")
-        print("radius = ", self.a, "(m)")
-        print("refractive index of the medium = ", self.m)
-        print("refractive index of the scatterer = ", self.mt)
-        print("Number of multipoles = ", self.N_multipoles)
 
     def set_params(self, radius=None, medium_ref_index=None, N_multipoles=None):
         self.a = radius;
@@ -124,37 +114,9 @@ class MieScatt(SpecialFunctions):
         self.Qscat = Qscat
         self.Qext = Qext
         self.Qabs = Qabs
-
-    def cross_sections(self, wavelength, material):
-        """
-        Return the cross sections decomposed into the fundamental elements of the multipoles.
-
-        """
-
-        self.check_parameters()
-
-        N_multipoles = self.N_multipoles;
-        m = self.m;
-        a = self.a;
-        mp = np.arange(1, N_multipoles + 1, 1)  # multipole list
-        mt = material.refractive_index(wavelength);
-
-        k = 2 * np.pi * m / wavelength
-        kt = 2 * np.pi * mt / wavelength
-
-        alpha = k * a
-        beta = kt * a
-
-        an, bn, cn, dn = self.compute_coeffs(mt, m, mp, alpha, beta)
-        # Evaluation of the cross sections
-        Qscat = (2 / alpha ** 2) * (2 * mp + 1) * (np.abs(an) ** 2 + np.abs(bn) ** 2)
-        Qext = (2 / alpha ** 2) * (2 * mp + 1) * (an + bn).real
-
-        Qscat = np.stack(Qscat)
-        Qext = np.stack(Qext)
-        Qabs = Qext - Qscat
-
-        return Qabs, Qext, Qscat
+        
+        self.cross_sections = pd.DataFrame([self.Qabs, self.Qext, self.Qscat]).T.rename(columns = {0:'Qabs', 1:'Qext', 2: 'Qscat'})
+        self.cross_sections.index = wavelength_list
 
     def check_parameters(self, *arg):
         if (self.a == None):

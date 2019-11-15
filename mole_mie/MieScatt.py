@@ -26,7 +26,7 @@ class SpecialFunctions(object):
 
 class MieScatt(SpecialFunctions):
 
-    __version__ = '0.1'
+    __version__ = '0.1.1'
     __codename__ = "ingrown toenail"
 
     a = None
@@ -40,7 +40,7 @@ class MieScatt(SpecialFunctions):
     def showinfo(self):
         print(colored(50 * '__', 'blue'))
         print(colored('Mie Scattering program Initiated.\n', 'blue'))
-        print('You are using {}. Please cite the following:'.format(colored('Mie-MoLE', 'red')))
+        print('You are using {}. Please cite the following:'.format(colored('MoLE_Mie', 'red')))
         print('* N. de Sousa, J.J. Saénz, \"The title of the paper\".\n')
         print('If you use the pre-loaded database, please cite:')
         print('* M.N.Polyanskiy, \"Refractive index database,\" https: // refractiveindex.info. Accessed on 2019-10-04.')

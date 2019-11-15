@@ -87,6 +87,8 @@ class MieScatt(SpecialFunctions):
         mp = np.arange(1, N_multipoles + 1, 1)  # multipole list
 
         result = []
+        result_Qexta_expanded = []
+        result_Qextb_expanded = []
 
         for wavelength in wavelength_list:
             mt = material.refractive_index(wavelength);
@@ -102,10 +104,20 @@ class MieScatt(SpecialFunctions):
             # Evaluation of the cross sections
             Qscat = (2 / alpha ** 2) * (2 * mp + 1) * (np.abs(an) ** 2 + np.abs(bn) ** 2)
             Qext = (2 / alpha ** 2) * (2 * mp + 1) * (an + bn).real
+            
+            Qext_a = (2 / alpha ** 2) * (2 * mp + 1) * (an).real
+            Qext_b = (2 / alpha ** 2) * (2 * mp + 1) * (bn).real
 
             result.append((wavelength, Qscat, Qext))
+            result_Qexta_expanded.append(Qext_a)
+            result_Qextb_expanded.append(Qext_b)
 
         result = np.array(result)
+
+        col_names_a = ['Qext_a' + str(i) for i in range(1,N_multipoles + 1)]
+        col_names_b = ['Qext_b' + str(i) for i in range(1, N_multipoles + 1)]
+        result_Qexta_expanded = pd.DataFrame(np.array(result_Qexta_expanded), columns=col_names_a)
+        result_Qextb_expanded = pd.DataFrame(np.array(result_Qextb_expanded), columns=col_names_b)
 
         Qscat = np.sum(np.stack(list(result[:, 1])), axis=1)
         Qext = np.sum(np.stack(list(result[:, 2])), axis=1)
@@ -114,6 +126,11 @@ class MieScatt(SpecialFunctions):
         self.Qscat = Qscat
         self.Qext = Qext
         self.Qabs = Qabs
+
+        result_Qexta_expanded.index = wavelength_list
+        result_Qextb_expanded.index = wavelength_list
+
+        self.expanded_Qext = pd.concat([result_Qexta_expanded, result_Qextb_expanded], axis = 1, sort = False)
         
         self.cross_sections = pd.DataFrame([self.Qabs, self.Qext, self.Qscat]).T.rename(columns = {0:'Qabs', 1:'Qext', 2: 'Qscat'})
         self.cross_sections.index = wavelength_list

@@ -23,7 +23,7 @@ if __name__ == '__main__':
     radius = 230E-9
     medium_ref_index = 1
     N_multipoles = 10
-    Si = Materials('Si')
+    Si = Materials('Si_palo')
 
     mie = MieScatt()
     mie.set_params(radius=radius, medium_ref_index=medium_ref_index, N_multipoles=N_multipoles)
@@ -34,6 +34,9 @@ if __name__ == '__main__':
     ax.plot(mie.cross_sections['Qabs'], label='$Q_{abs}$')
     ax.plot(mie.cross_sections['Qext'], label='$Q_{ext}$', linestyle=':')
     ax.plot(mie.cross_sections['Qscat'], label='$Q_{scat}$')
+    ax.plot(mie.expanded_Qext['Qext_a1'], label='$Q_{ext, a1}$')
+    ax.plot(mie.expanded_Qext['Qext_b1'], label='$Q_{ext, b1}$')
+    ax.plot(mie.expanded_Qext['Qext_b2'], label='$Q_{ext, b2}$')
     ax.set_xlabel('$\lambda$ (m)', fontsize=16)
     ax.set_ylabel('', fontsize=16)
     ax.tick_params(axis='both', which='major', labelsize=13)

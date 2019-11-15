@@ -10,8 +10,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from libs.MieLib import MieScatt
-from libs.Materials import Materials
+from MoLEMie.MieLib import MieScatt
+from MoLEMie.Materials import Materials
 
 if __name__ == '__main__':
     wavelength_start = 1.0E-6  # wavelength range lower limit

@@ -8,5 +8,5 @@ setup(name='mole_mie',
       author_email='nunodsousa@dipc.org',
       license='MIT',
       packages=['mole_mie'],
-      install_requires=['termcolor', 'numpy', 'pandas', 'scipy>=1.3.1']
+      install_requires=['termcolor', 'numpy', 'pandas', 'scipy>=1.3.1'],
       zip_safe=False)

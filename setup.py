@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='mole_mie',
-      version='0.2',
+      version='0.1.1',
       description='First version of a Mie Calculator',
       url='https://github.com/nunodsousa/MieScattering',
       author='Nuno de Sousa',

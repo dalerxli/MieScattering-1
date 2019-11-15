@@ -47,14 +47,14 @@ class MieScatt(SpecialFunctions):
 
         :return:
         """
-        print(colored(50 * '__', 'blue'))
+        print(colored(14 * '_______', 'blue'))
         print(colored('Mie Scattering program Initiated.\n', 'blue'))
         print('You are using {}. Please cite the following:'.format(colored('MoLE_Mie', 'red')))
         print('* N. de Sousa, J.J. Saénz, \"The title of the paper\".\n')
         print('If you use the pre-loaded database, please cite:')
         print('* M.N.Polyanskiy, \"Refractive index database,\" https: // refractiveindex.info. Accessed on 2019-10-04.')
         print('Version', self.__version__, self.__codename__)
-        print(colored(50*'__', 'blue'))
+        print(colored(14*'_______', 'blue'))
 
     def set_params(self, radius=None, medium_ref_index=None, N_multipoles=None):
         """

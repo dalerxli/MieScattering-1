@@ -1,8 +1,23 @@
+######################################################################
+#
+#
+#
+# Materials Class
+#
+# Mole Group
+# December 2019
+# Nuno de Sousa
+######################################################################
+
 import pandas as pd
 import numpy as np
 
-
 class Materials(object):
+    """
+    This is a general class that contains several functions that allow us to define and load the optical properties
+    of materials.
+    """
+
     material = None
     data = None
     path = None
@@ -11,6 +26,14 @@ class Materials(object):
     source = None
 
     def __init__(self, Symbol, path=None, value = None, source='refractiveindex.info'):
+        """
+        :param Symbol: Name that charaterizes the material
+        :param path: path where the data is. Should be the address when using the refractiveindex or the path
+        when we load a datafile. Data must be a csv with wavelength (column name wl), n (column name n) and k (column
+        name k)
+        :param value: It must contain a number when the source is "constant"
+        :param source: It can be refractiveindex.info, datafile or constant.
+        """
         self.material = Symbol
         self.path = path
         self.source = source
@@ -34,6 +57,11 @@ class Materials(object):
 
 
     def refractive_index(self, wavelength):
+        """
+        It returns the refractive index for a specific wavelength.
+        :param wavelength: wavelength
+        :return: refractive index (n + 1j*k)
+        """
         if (self.material == 'Si_palo'):
             if ((wavelength >= 1E-6) & (wavelength <= 2E-6)):
                 return 3.5 + 0.0j
@@ -52,6 +80,10 @@ class Materials(object):
                     'It is not possible to compute the refractive index because the wavelength it is out of range.')
 
     def load_data_refractiveindex(self, path):
+        """
+        :param path:
+        :return:
+        """
         data = pd.read_csv(path, header=None)
         n_index = data.index[data[1] == 'n'].values
         k_index = data.index[data[1] == 'k'].values
@@ -98,6 +130,11 @@ class Materials(object):
             return data_k[['n', 'k']]
 
     def interpolate(self, wavelength):
+        """
+        Linear interpolates the data to return the refractive index
+        :param wavelength: wavelength to interpolate
+        :return: refractive index (n + 1j*k)
+        """
         return np.interp(wavelength, self.data.index.values, self.data['n'].values) + 1j * np.interp(wavelength,
                                                                                                      self.data.index.values,
                                                                                                      self.data[

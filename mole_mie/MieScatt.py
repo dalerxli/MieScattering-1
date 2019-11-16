@@ -44,8 +44,7 @@ class MieScatt(SpecialFunctions):
 
     def showinfo(self):
         """
-
-        :return:
+        :return: Information about the library
         """
         print(colored(14 * '_______', 'blue'))
         print(colored('Mie Scattering program Initiated.\n', 'blue'))
@@ -58,11 +57,11 @@ class MieScatt(SpecialFunctions):
 
     def set_params(self, radius=None, medium_ref_index=None, N_multipoles=None):
         """
-
+        Definition of the parameters. It is self-explained
         :param radius:
         :param medium_ref_index:
         :param N_multipoles:
-        :return:
+        :return: None
         """
         self.a = radius;
         self.m = medium_ref_index;
@@ -75,12 +74,12 @@ class MieScatt(SpecialFunctions):
     def compute_coeffs(self, mt, m, mp, alpha, beta):
         """
 
-        :param mt:
-        :param m:
-        :param mp:
-        :param alpha:
-        :param beta:
-        :return:
+        :param mt: refractive index of the particle
+        :param m: refractive index of the medium
+        :param mp: multipoles vector
+        :param alpha: wavenumber in the medium multiplied by the particle radius
+        :param beta: wavenumber in the particle multiplied by the particle radius
+        :return: mie coefficients
         """
         an = (mt * self.diff_psi(mp, alpha) * self.psi(mp, beta) - m * self.psi(mp, alpha) * self.diff_psi(mp,
                                                                                                            beta)) / (
@@ -102,10 +101,10 @@ class MieScatt(SpecialFunctions):
 
     def scan_cross_sections(self, wavelength_list, material):
         """
-
+        Computes the Mie Solution for a wavelength list.
         :param wavelength_list:
         :param material:
-        :return:
+        :return: Variables in the class. cross_sections, expanded_Qext, coeffs
         """
 
         self.check_parameters()

@@ -23,9 +23,9 @@ if __name__ == '__main__':
     radius = 230E-9
     medium_ref_index = 1
     N_multipoles = 10
-    Si = Materials('Si_palo')
 
     mie = MieScatt()
+    Si = Materials('Si_palo')
     mie.set_params(radius=radius, medium_ref_index=medium_ref_index, N_multipoles=N_multipoles)
     mie.scan_cross_sections(wavelength_list, Si)
 

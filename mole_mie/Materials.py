@@ -6,14 +6,32 @@ class Materials(object):
     material = None
     data = None
     path = None
+    constant = False
+    value = np.nan
+    source = None
 
-    def __init__(self, Symbol, path=None, source='refractiveindex.info'):
+    def __init__(self, Symbol, path=None, value = None, source='refractiveindex.info'):
         self.material = Symbol
         self.path = path
+        self.source = source
         if ((self.material != 'Si_palo') & (source == 'refractiveindex.info')):
             print('Downloading data from:')
             print(path)
             self.data = self.load_data_refractiveindex(path)
+            print('Data Loaded.')
+
+        if((self.material != 'Si_palo') & (source == 'datafile')):
+            print('Downloading data from:')
+            self.data = pd.read_csv(path).rename(columns = {'wl': 'wavelength'}).set_index('wavelength')
+            print('Data Loaded.')
+
+        if(self.material == 'Si_palo'):
+            print('You have loaded the magic \'Si de palo\', i.e. wood silicon.')
+
+        if((self.material != 'Si_palo') & (source == 'constant')):
+            self.constant = True
+            self.value = value
+
 
     def refractive_index(self, wavelength):
         if (self.material == 'Si_palo'):
@@ -22,6 +40,10 @@ class Materials(object):
             else:
                 raise ValueError(
                     'It is not possible to compute the refractive index because the wavelength it is out of range.')
+
+        elif(self.source == 'constant'):
+            return self.value
+
         else:
             if ((wavelength >= self.data.index[0]) & (wavelength <= self.data.index[-1])):
                 return self.interpolate(wavelength)

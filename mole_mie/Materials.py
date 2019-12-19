@@ -139,3 +139,22 @@ class Materials(object):
                                                                                                      self.data.index.values,
                                                                                                      self.data[
                                                                                                          'k'].values)
+
+    @staticmethod
+    def polarization(volume=1, k=None, epsilon_part=1, epsilon_medium=1):
+
+        # Clausius-Mossotti polarizability with radiative correction
+        if (epsilon_part != -2):
+            alpha0 = 3 * volume * (epsilon_part - 1 * epsilon_medium) / (epsilon_part + 2 * epsilon_medium)
+            alpha = alpha0 / (1 - 1j * k ** 3 / (6 * np.pi) * alpha0)
+            alpha0inv = 1 / (3 * volume * (epsilon_part - 1 * epsilon_medium) / (epsilon_part + 2 * epsilon_medium))
+
+        # Resonant Particles
+        elif (epsilon_part == -2):
+            alpha = 1j * 6 * np.pi / k ** 3
+            alpha0inv = 0
+
+        else:
+            raise ValueError('Something is wrong with the polarizability.')
+
+        return alpha, alpha0inv

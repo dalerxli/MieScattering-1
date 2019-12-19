@@ -39,8 +39,13 @@ class MieScatt(SpecialFunctions):
     expanded_Qext = None
     cross_sections = None
 
-    def __init__(self):
-        self.showinfo()
+    def __init__(self, silence = False):
+        """
+        Possiblity of hide the initial message.
+        :param silence: True or False
+        """
+        if(silence == False):
+            self.showinfo()
 
     def showinfo(self):
         """

@@ -81,7 +81,7 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(figsize=(8, 8))
     z = np.real(
         mie.H_scatt_int_abs.reshape(int(np.sqrt(len(mie.E_scatt_int_abs))), int(np.sqrt(len(mie.E_scatt_int_abs)))))
-    im = ax.imshow(z, cmap=cm.jet, interpolation='bilinear', extent=[-500, 500, -500, 500], vmin=0, vmax=9,
+    im = ax.imshow(z, cmap=cm.jet, interpolation='bilinear', extent=[-500, 500, -500, 500], vmin=0, vmax=6E-3,
                    origin='lower')
     # ax.contour(z, levels = 10, colors='blue', linewidths = 0.5, origin='lower', extent=[-1000,1000,-1000,1000])
     ax.set_xlabel('x', fontsize=16)

@@ -427,8 +427,9 @@ class MieScatt(SpecialFunctions):
     def abs_fields(self):
         self.E_scatt_int_abs = np.einsum('ij,ij->i', self.E_scatt_int, np.conjugate(self.E_scatt_int))
         self.H_scatt_int_abs = np.einsum('ij,ij->i', self.H_scatt_int, np.conjugate(self.H_scatt_int))
-        self.E_total_abs = np.einsum('ij,ij->i', self.E_total, np.conjugate(self.E_total))
-        self.H_total_abs = np.einsum('ij,ij->i', self.H_total, np.conjugate(self.H_total))
+        if(full_field_flag == True):
+            self.E_total_abs = np.einsum('ij,ij->i', self.E_total, np.conjugate(self.E_total))
+            self.H_total_abs = np.einsum('ij,ij->i', self.H_total, np.conjugate(self.H_total))
 
     def check_parameters(self, *arg):
         """

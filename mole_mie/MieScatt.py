@@ -128,6 +128,8 @@ class MieScatt(SpecialFunctions):
     expanded_Qext = None
     cross_sections = None
 
+    self.c_const = 3E17; #(nm/s)
+
     def __init__(self, silence=False):
         """
         Possiblity of hide the initial message.
@@ -363,18 +365,15 @@ class MieScatt(SpecialFunctions):
                 if (point[0] > radius):
                     for n in range(1, N_multipoles + 1):
                         point_field = point_field + (En(n) * (
-                                    1j * np.multiply(bn[n - 1], self.No1n(n, point, k)) + np.multiply(an[n - 1],
-                                                                                                      self.Me1n(n,
-                                                                                                                point,
-                                                                                                                k))))
-                    Hscatt_field.append(point_field)
+                                    1j * np.multiply(bn[n - 1], self.No1n(n, point, k)) + np.multiply(an[n - 1], self.Me1n(n, point, k))))
+                    Hscatt_field.append(k*self.c_const*point_field)
 
                 else:
                     for n in range(1, N_multipoles + 1):
                         point_field = point_field + (En(n) * (
                                     np.multiply(dn[n - 1], self.Me1n(n, point, kt, inside=True)) + 1j * np.multiply(
                                 cn[n - 1], self.No1n(n, point, kt, inside=True))))
-                    Hscatt_field.append(point_field)
+                    Hscatt_field.append(-kt*self.c_const*point_field)
 
             Hscatt_int_field = np.array(Hscatt_field)
             self.H_scatt_int = Hscatt_int_field
@@ -404,7 +403,7 @@ class MieScatt(SpecialFunctions):
                     for n in range(1, N_multipoles + 1):
                         point_field = point_field + (
                                     En(n) * (np.array(self.Me1n(n, point, k)) + 1j * np.array(self.No1n(n, point, k))))
-                    H_pw_field.append(point_field)
+                    H_pw_field.append(-k*self.c_const*point_field)
                 else:
                     H_pw_field.append(np.array([0, 0, 0]))
 

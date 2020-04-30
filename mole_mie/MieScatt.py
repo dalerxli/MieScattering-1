@@ -489,7 +489,7 @@ class MappingSpace(object):
     def set_points(self, points, datatype):
         self.points = points
         if ((datatype == 'cartesian') or (datatype == 'spherical')):
-            self.type = datetype
+            self.type = datatype
         else:
             raise ValueError('Datetype error. It must be cartesian or spherical.')
 

@@ -117,6 +117,7 @@ class SpecialFunctions(object):
             return self.spherical_hn1(n, k * r, 0) + k * r * (-self.spherical_hn1(n, k * r) / (2 * k * r) + 1 / 2 * (
                         self.spherical_hn1(n - 1, k * r) - self.spherical_hn1(n + 1, k * r)))
 
+
 class MieScatt(SpecialFunctions):
     __version__ = '0.1.4'
     __codename__ = "dark ingrown toenail"
@@ -287,35 +288,28 @@ class MieScatt(SpecialFunctions):
         self.cross_sections.index = wavelength_list
 
     def compute_fields(self, wavelength, material, mp, points, components='EH', rat='Scatt'):
-        """ - wavelength
-         - Material
-         - Number of Multipoles
-         - points to compute the field is spherical coordinates
-         - components (Electric, Magnetic or Electric and Magnetic)
-         - rat (Scattered or Full field)
+        # mp - multipoles
 
-         'components' parameter defines the element of the electromagnetic field to be computed.
-         It accept the values 'E' - electric field, 'H' - Magnetic Field and 'EH' -  Electric and Magnetic Field
-         "rat" parameter accepts 'Scatt' or 'Full'. It computes the scattered or the full field, considering the plane wave
-         Results are stored inside the object in variables: E_scatt_int, H_scatt_int, E_total, H_total
-         """
+        self.Elec_flag = False
+        self.Mag_flag = False
+        self.full_field_flag = False
 
         if (components == 'EH'):
-            Elec_flag = True
-            Mag_flag = True
+            self.Elec_flag = True
+            self.Mag_flag = True
         elif (components == 'E'):
-            Elec_flag = True
-            Mag_flag = False
+            self.Elec_flag = True
+            self.Mag_flag = False
         elif (components == 'H'):
-            Elec_flag = False
-            Mag_flag = True
+            self.Elec_flag = False
+            self.Mag_flag = True
         else:
             raise ValueError('Wrong definition of the components.')
 
         if (rat == 'Scatt'):
-            full_field_flag = False
+            self.full_field_flag = False
         elif (rat == 'Full'):
-            full_field_flag = True
+            self.full_field_flag = True
         else:
             raise ValueError('Wrong definition of type of calculation. You must defined Scatt or Full.')
 
@@ -339,7 +333,7 @@ class MieScatt(SpecialFunctions):
         def En(n, E0=1):
             return 1j ** n * (2 * n + 1) / (n * (n + 1)) * E0
 
-        if (Elec_flag == True):
+        if (self.Elec_flag == True):
             Escatt_field = []
 
             for point in points:
@@ -364,7 +358,7 @@ class MieScatt(SpecialFunctions):
 
             self.E_scatt_int = Escatt_int_field
 
-        if (Mag_flag == True):
+        if (self.Mag_flag == True):
             Hscatt_field = []
 
             for point in points:
@@ -388,7 +382,7 @@ class MieScatt(SpecialFunctions):
             Hscatt_int_field = np.array(Hscatt_field)
             self.H_scatt_int = Hscatt_int_field
 
-        if (full_field_flag == True):
+        if (self.full_field_flag == True):
             E_pw_field = []
 
             for point in points:
@@ -427,7 +421,7 @@ class MieScatt(SpecialFunctions):
     def abs_fields(self):
         self.E_scatt_int_abs = np.einsum('ij,ij->i', self.E_scatt_int, np.conjugate(self.E_scatt_int))
         self.H_scatt_int_abs = np.einsum('ij,ij->i', self.H_scatt_int, np.conjugate(self.H_scatt_int))
-        if(full_field_flag == True):
+        if (self.full_field_flag == True):
             self.E_total_abs = np.einsum('ij,ij->i', self.E_total, np.conjugate(self.E_total))
             self.H_total_abs = np.einsum('ij,ij->i', self.H_total, np.conjugate(self.H_total))
 

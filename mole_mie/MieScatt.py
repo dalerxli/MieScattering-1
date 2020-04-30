@@ -85,17 +85,16 @@ class SpecialFunctions(object):
 
     def No1n(self, n, sphere_vector, k, inside=False):
         r, theta, phi = sphere_vector[0], sphere_vector[1], sphere_vector[2]
-        return (
-        np.sin(phi) * n * (n + 1) * np.sin(theta) * self.Pi_n(n, theta) * self.radial_function(n, k, r, inside) / (
-                    k * r), \
-        np.sin(phi) * self.Tau_n(n, theta) * self.Diff_rho_sf_rho(n, k, r, inside) / (k * r), \
-        np.cos(phi) * self.Pi_n(n, theta) * self.Diff_rho_sf_rho(n, k, r, inside) / (k * r))
+        #print("a = ", self.radial_function(n, k, r, inside) / (k * r))
+        #print("b = ", self.Diff_rho_sf_rho(n, k, r, inside) / (k * r))
+        return (np.sin(phi) * n * (n + 1) * np.sin(theta) * self.Pi_n(n, theta) * self.radial_function(n, k, r, inside) / (k * r),
+                np.sin(phi) * self.Tau_n(n, theta) * self.Diff_rho_sf_rho(n, k, r, inside) / (k * r),
+                np.cos(phi) * self.Pi_n(n, theta) * self.Diff_rho_sf_rho(n, k, r, inside) / (k * r))
 
     def Ne1n(self, n, sphere_vector, k, inside=False):
         r, theta, phi = sphere_vector[0], sphere_vector[1], sphere_vector[2]
         return (
-        np.cos(phi) * n * (n + 1) * np.sin(theta) * self.Pi_n(n, theta) * self.radial_function(n, k, r, inside) / (
-                    k * r),
+        np.cos(phi) * n * (n + 1) * np.sin(theta) * self.Pi_n(n, theta) * self.radial_function(n, k, r, inside) / (k * r),
         np.cos(phi) * self.Tau_n(n, theta) * self.Diff_rho_sf_rho(n, k, r, inside) / (k * r),
         -np.sin(phi) * self.Pi_n(n, theta) * self.Diff_rho_sf_rho(n, k, r, inside) / (k * r))
 
@@ -111,11 +110,9 @@ class SpecialFunctions(object):
 
     def Diff_rho_sf_rho(self, n, k, r, inside=False):
         if (inside == True):
-            return sps.spherical_jn(n, k * r, 0) + k * r * (-sps.spherical_jn(n, k * r) / (2 * k * r) + 1 / 2 * (
-                        sps.spherical_jn(n - 1, k * r) - sps.spherical_jn(n + 1, k * r)))
+            return sps.spherical_jn(n, k * r, 0) + k * r * (-sps.spherical_jn(n, k * r) / (2 * k * r) + 1 / 2 * (sps.spherical_jn(n - 1, k * r) - sps.spherical_jn(n + 1, k * r)))
         else:
-            return self.spherical_hn1(n, k * r, 0) + k * r * (-self.spherical_hn1(n, k * r) / (2 * k * r) + 1 / 2 * (
-                        self.spherical_hn1(n - 1, k * r) - self.spherical_hn1(n + 1, k * r)))
+            return self.spherical_hn1(n, k * r, 0) + k * r * (-self.spherical_hn1(n, k * r) / (2 * k * r) + 1 / 2 * (self.spherical_hn1(n - 1, k * r) - self.spherical_hn1(n + 1, k * r)))
 
 
 class MieScatt(SpecialFunctions):

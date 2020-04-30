@@ -128,7 +128,7 @@ class MieScatt(SpecialFunctions):
     expanded_Qext = None
     cross_sections = None
 
-    c_const = 3E17; #(nm/s)
+    c_const = 1; #(nm/s)
 
     def __init__(self, silence=False):
         """

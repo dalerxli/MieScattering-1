@@ -118,7 +118,7 @@ class SpecialFunctions(object):
                         self.spherical_hn1(n - 1, k * r) - self.spherical_hn1(n + 1, k * r)))
 
 class MieScatt(SpecialFunctions):
-    __version__ = '0.1.3'
+    __version__ = '0.1.3.1'
     __codename__ = "dark ingrown toenail"
 
     a = None

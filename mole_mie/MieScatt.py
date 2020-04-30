@@ -315,8 +315,8 @@ class MieScatt(SpecialFunctions):
         self.check_parameters()
 
         #N_multipoles = self.N_multipoles
-        #m = self.m
-        #radius = self.a
+        m = self.m
+        radius = self.a
 
         mp = np.arange(1, mp + 1, 1)
         mt = material.refractive_index(wavelength)

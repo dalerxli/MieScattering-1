@@ -287,7 +287,18 @@ class MieScatt(SpecialFunctions):
         self.cross_sections.index = wavelength_list
 
     def compute_fields(self, wavelength, material, mp, points, components='EH', rat='Scatt'):
-        # mp - multipoles
+        """ - wavelength
+         - Material
+         - Number of Multipoles
+         - points to compute the field is spherical coordinates
+         - components (Electric, Magnetic or Electric and Magnetic)
+         - rat (Scattered or Full field)
+
+         'components' parameter defines the element of the electromagnetic field to be computed.
+         It accept the values 'E' - electric field, 'H' - Magnetic Field and 'EH' -  Electric and Magnetic Field
+         "rat" parameter accepts 'Scatt' or 'Full'. It computes the scattered or the full field, considering the plane wave
+         Results are stored inside the object in variables: E_scatt_int, H_scatt_int, E_total, H_total
+         """
 
         if (components == 'EH'):
             Elec_flag = True

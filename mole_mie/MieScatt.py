@@ -314,11 +314,11 @@ class MieScatt(SpecialFunctions):
 
         self.check_parameters()
 
-        N_multipoles = self.N_multipoles
-        m = self.m
-        radius = self.a
+        #N_multipoles = self.N_multipoles
+        #m = self.m
+        #radius = self.a
 
-        mp = np.arange(1, N_multipoles + 1, 1)
+        mp = np.arange(1, mp + 1, 1)
         mt = material.refractive_index(wavelength)
 
         k = 2 * np.pi * m / wavelength
@@ -338,7 +338,7 @@ class MieScatt(SpecialFunctions):
             for point in points:
                 point_field = np.zeros(3)
                 if (point[0] > radius):
-                    for n in range(1, N_multipoles + 1):
+                    for n in range(1, mp + 1):
                         point_field = point_field + (En(n) * (
                                     1j * np.multiply(an[n - 1], self.Ne1n(n, point, k)) - np.multiply(bn[n - 1],
                                                                                                       self.Mo1n(n,
@@ -347,7 +347,7 @@ class MieScatt(SpecialFunctions):
                     Escatt_field.append(point_field)
 
                 else:
-                    for n in range(1, N_multipoles + 1):
+                    for n in range(1, mp + 1):
                         point_field = point_field + (En(n) * (
                                     np.multiply(cn[n - 1], self.Mo1n(n, point, kt, inside=True)) - 1j * np.multiply(
                                 dn[n - 1], self.Ne1n(n, point, kt, inside=True))))
@@ -363,13 +363,13 @@ class MieScatt(SpecialFunctions):
             for point in points:
                 point_field = np.zeros(3)
                 if (point[0] > radius):
-                    for n in range(1, N_multipoles + 1):
+                    for n in range(1, mp + 1):
                         point_field = point_field + (En(n) * (
                                     1j * np.multiply(bn[n - 1], self.No1n(n, point, k)) + np.multiply(an[n - 1], self.Me1n(n, point, k))))
                     Hscatt_field.append(k*self.c_const*point_field)
 
                 else:
-                    for n in range(1, N_multipoles + 1):
+                    for n in range(1, mp + 1):
                         point_field = point_field + (En(n) * (
                                     np.multiply(dn[n - 1], self.Me1n(n, point, kt, inside=True)) + 1j * np.multiply(
                                 cn[n - 1], self.No1n(n, point, kt, inside=True))))
@@ -384,7 +384,7 @@ class MieScatt(SpecialFunctions):
             for point in points:
                 point_field = np.zeros(3)
                 if (point[0] > radius):
-                    for n in range(1, N_multipoles + 1):
+                    for n in range(1, mp + 1):
                         point_field = point_field + (
                         (np.array(self.Mo1n(n, point, k)) - 1j * np.array(self.Ne1n(n, point, k))))
                     E_pw_field.append(point_field)
@@ -400,7 +400,7 @@ class MieScatt(SpecialFunctions):
             for point in points:
                 point_field = np.zeros(3)
                 if (point[0] > radius):
-                    for n in range(1, N_multipoles + 1):
+                    for n in range(1, mp + 1):
                         point_field = point_field + (
                                     En(n) * (np.array(self.Me1n(n, point, k)) + 1j * np.array(self.No1n(n, point, k))))
                     H_pw_field.append(-k*self.c_const*point_field)

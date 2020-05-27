@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='mole_mie',
-      version='0.1.4.12',
+      version='0.1.4.13',
       description='Scattering of a Spherical Particle using Mie Theory.',
       url='https://github.com/nunodsousa/MieScattering',
       author='Nuno de Sousa',

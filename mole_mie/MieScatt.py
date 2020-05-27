@@ -286,7 +286,7 @@ class MieScatt(SpecialFunctions):
             columns={0: 'Qabs', 1: 'Qext', 2: 'Qscat'})
         self.cross_sections.index = wavelength_list
 
-    def compute_fields(self, wavelength, material, mp, points, components='EH', rat='Scatt', special_coeffs = None):
+    def compute_fields(self, wavelength, material, mp, points, components='EH', rat='Scatt', external_coeffs = None):
         # mp - multipoles
 
         self.Elec_flag = False
@@ -327,7 +327,7 @@ class MieScatt(SpecialFunctions):
         alpha = k * radius
         beta = kt * radius
 
-        if(special_coeffs == None):
+        if(external_coeffs == None):
             an, bn, cn, dn = self.compute_coeffs(mt, m, mp, alpha, beta)
         else:
             an, bn, cn, dn = external_coeffs[0], external_coeffs[0], external_coeffs[0],external_coeffs[0]

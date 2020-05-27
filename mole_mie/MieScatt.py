@@ -286,7 +286,7 @@ class MieScatt(SpecialFunctions):
             columns={0: 'Qabs', 1: 'Qext', 2: 'Qscat'})
         self.cross_sections.index = wavelength_list
 
-    def compute_fields(self, wavelength, material, mp, points, components='EH', rat='Scatt', external_coeffs = None):
+    def compute_fields(self, wavelength, material, mp, points, components='EH', rat='Scatt', special_coeffs = None):
         # mp - multipoles
 
         self.Elec_flag = False
